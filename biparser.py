@@ -8,7 +8,6 @@ class ScanData(object):
         self.mines = []
         self.players = []
         self.bombs = []
-        self.wormholes = []
 
     def addMine(self, owner, x, y):
         self.mines.append(((float(x), float(y)), owner))
@@ -18,9 +17,6 @@ class ScanData(object):
 
     def addBomb(self, x, y, t):
         self.bombs.append((float(x), float(y), float(t)))
-
-    def addWormHole(self, x, y, radius):
-        self.wormholes.append((float(x), float(y), float(radius)))
 
 class Status(object):
     def __init__(self, x, y, dx, dy, scan_data):
@@ -51,6 +47,21 @@ class BIParser(object):
             sys.stderr.write("Accelerate error: " + text)
             return False
         return True
+
+    def parseDrive(self, text):
+        if text.split()[0] != "DRIVE_OUT":
+            sys.stderr.write("Drive error: " + text)
+            return False
+        return True
+
+    def parseMines(self, text):
+        mines_data = text.split()
+        if mines_data[0] != "MINES_OUT":
+            return None
+        mines = []
+        for (owner, x, y) in grouper(3, mines_data[2:]):
+            mines.append((owner, x, y))
+        return mines
 
     def parseBrake(self, text):
         if text.split()[0] != "BRAKE_OUT":
@@ -94,13 +105,11 @@ class BIParser(object):
         mine_index = scan_data.index("MINES")
         player_index = scan_data.index("PLAYERS")
         bomb_index = scan_data.index("BOMBS")
-        wormholes_index = scan_data.index("WORMHOLES")
 
         # Get relevant data
         mine_data = scan_data[mine_index + 1:player_index]
         player_data = scan_data[player_index + 1:bomb_index]
-        bomb_data = scan_data[bomb_index + 1:wormholes_index]
-        wormholes_data = scan_data[wormholes_index + 1:]
+        bomb_data = scan_data[bomb_index + 1:]
 
         scan_data = ScanData()
 
@@ -115,10 +124,6 @@ class BIParser(object):
         # Populate bomb data
         for (x, y, t) in grouper(3, bomb_data[1:]):
             scan_data.addBomb(x, y, t)
-
-        # Populate wormholes data
-        for (x, y, radius) in grouper(3, wormholes_data[1:]):
-            scan_data.addWormHole(x, y, radius)
 
         return scan_data
 

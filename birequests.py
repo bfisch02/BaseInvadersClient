@@ -32,6 +32,15 @@ class BIRequestHandler(object):
         response = executeCommand(self.tn, command)
         return self.parser.parseAccelerate(response)
 
+    def drive(self, radians, speed):
+        command = " ".join(["DRIVE", str(radians), str(speed)])
+        response = executeCommand(self.tn, command)
+        return self.parser.parseDrive(response)
+
+    def mines(self):
+        response = executeCommand(self.tn, "MINES")
+        return self.parser.parseMines(response)
+
     def brake(self):
         response = executeCommand(self.tn, "BRAKE")
         return self.parser.parseBrake(response)
