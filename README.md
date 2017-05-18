@@ -1,1 +1,3 @@
-BaseInvaders Client Code
+# BIClient
+
+The best MineHunters client code out there
