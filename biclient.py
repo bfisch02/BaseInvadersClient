@@ -18,7 +18,7 @@ def parseArgs():
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', default=False)
     parser.add_argument('-u', '--username', action='store', dest='username', required=True)
     parser.add_argument('-p', '--password', action='store', dest='password', required=True)
-    parser.add_argument('--host', action='store', dest='host', default="localhost")
+    parser.add_argument('--host', action='store', dest='host', default="34.225.107.187")
     parser.add_argument('--port', action='store', dest='port', default="17429")
     return parser.parse_args()
 

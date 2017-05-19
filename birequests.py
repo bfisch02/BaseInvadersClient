@@ -68,7 +68,6 @@ class BIRequestHandler(object):
 def initializeTcpConnection(username, password, host, port):
     tn = telnetlib.Telnet(host, port=port)
     tn.write(username + " " + password + "\n")
-    tn.read_until("\n")
     return tn
 
 def executeCommand(tn, cmd):
