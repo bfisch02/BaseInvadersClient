@@ -6,17 +6,15 @@ import math
 from random import random
 
 # Custom modules
-from birequests import BIRequestHandler
-from biminemanager import BIMineManager, BIMine
-from bilogic import getDirection
+from src.birequests import BIRequestHandler
 
 SLEEP_INTERVAL = .5
 
 class BIController(object):
-    def __init__(self, reqhandler, username, logger):
+    def __init__(self, reqhandler, username, getDirection):
         self.rh = reqhandler
         self.username = username
-        self.logger = logger
+        self.__getDirection = getDirection
 
     def start(self):
         rh = self.rh
@@ -32,7 +30,7 @@ class BIController(object):
             new_mines = self.__get_mines()
             for mine in new_mines:
                 mines[mine["point"]] = mine
-            angle = getDirection(self.username, position, mines.values())
+            angle = self.__getDirection(self.username, position, mines.values())
             if angle != None:
                 speed = 90;
                 angle_radians = -1 * angle * math.pi / 180

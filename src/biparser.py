@@ -1,7 +1,7 @@
-#!/opt/bb/bin/python2.7
+#!/usr/bin/python3
 
 import sys
-from itertools import izip_longest
+from itertools import zip_longest
 
 class ScanData(object):
     def __init__(self):
@@ -129,4 +129,4 @@ class BIParser(object):
 
 def grouper(n, iterable, fillvalue=None):
     args = [iter(iterable)] * n
-    return izip_longest(fillvalue=fillvalue, *args)
+    return zip_longest(fillvalue=fillvalue, *args)

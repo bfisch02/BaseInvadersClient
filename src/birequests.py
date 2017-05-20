@@ -1,9 +1,9 @@
-#!/opt/bb/bin/python2.7
+#!/usr/bin/python3
 
 import sys
 import telnetlib
 
-from biparser import BIParser
+from src.biparser import BIParser
 
 class BIRequestHandler(object):
     def __init__(self, username, password, host, port):
@@ -67,11 +67,13 @@ class BIRequestHandler(object):
 
 def initializeTcpConnection(username, password, host, port):
     tn = telnetlib.Telnet(host, port=port)
-    tn.write(username + " " + password + "\n")
+    register_str = username + " " + password + "\n"
+    tn.write(register_str.encode('ascii'))
     return tn
 
 def executeCommand(tn, cmd):
-    tn.write(cmd + "\n")
-    rVal = tn.read_until("\n")
-    return rVal
+    cmd += "\n"
+    tn.write(cmd.encode('ascii'))
+    rVal = tn.read_until("\n".encode('ascii'))
+    return rVal.decode('unicode_escape')
 
