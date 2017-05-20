@@ -26,3 +26,13 @@ The "owner" of a mine is the username of the ship that owned the mine whenever i
 The game board is 10,000 x 10,000, and the top-left corner represents point [0, 0]. Therefore, all x and y coordinates will fall between 0 and 9,999, inclusive. The edges of the game board do not act as walls, so your ship may wrap around from one end of the board to the other (think pac-man... unless that's before your time).
 
 The getDirection() function should return the direction (in degrees) in which your ship should fly. The ship asks for a new direction twice per second by calling the getDirection() function. Think of getDirection() as the brains behind the whole operation: your ship provides the function with all the information it knows about the current state of the game, and your function uses this information to decide where your ship should go next.
+
+### Helper Functions
+
+The following functions are available for use by your getDirection() function:
+- getDistance(p1, p2)
+  - Arguments: Two points of the form [x, y]
+  - Return value: The distance between p1 and p2.
+- getAngle(p1, p2)
+  - Arguments: Two points of the form [x, y]
+  - Return value: The angle from p1 to p2 (in degrees).
